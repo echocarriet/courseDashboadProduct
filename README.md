@@ -1,24 +1,12 @@
-# vuecourse
+## 網址 : https://echocarriet.github.io/courseDashboadProduct/
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 登入頁面
+- 後台 | 商品頁面
+  - 新增商品
+  - 編輯商品
+  - 刪除商品
+- Bootstrap
+  - Navbar
+  - Collapse
+  - Modal
+  - Pagination
