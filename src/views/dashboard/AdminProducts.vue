@@ -37,7 +37,11 @@
             >
               編輯
             </button>
-            <button type="button" class="btn btn-outline-danger" @click.prevent="delProduct(item)">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              @click.prevent="openDelModal(item)"
+            >
               刪除
             </button>
           </div>
@@ -52,9 +56,11 @@
     :productProps="product"
     @update-product="updateProduct"
   ></ProductModal>
+  <DelModal ref="DelModal" :delProduct="product" @del-product="delProduct"></DelModal>
 </template>
 <script>
 import ProductModal from '@/components/dashboard/ProductModal.vue';
+import DelModal from '@/components/dashboard/DelModal.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {
@@ -68,6 +74,7 @@ export default {
   },
   components: {
     ProductModal,
+    DelModal,
     Pagination,
   },
   methods: {
@@ -105,12 +112,16 @@ export default {
         }
       });
     },
-    delProduct(item) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+    openDelModal(item) {
+      this.product = { ...item };
+      this.$refs.DelModal.showModal();
+    },
+    delProduct() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.product.id}`;
       this.$http.delete(api).then((res) => {
         console.log(res);
         if (res.data.success) {
-          this.$refs.ProductModal.hideModal();
+          this.$refs.DelModal.hideModal();
           this.getProducts();
         }
       });
