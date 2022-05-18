@@ -14,7 +14,7 @@
             <span v-if="isNew">新增產品</span>
             <span v-else>編輯產品</span>
           </h5>
-          <button type="button" class="btn-close"></button>
+          <button type="button" class="btn-close bg-white" @click="hideModal"></button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -51,34 +51,34 @@
                   v-for="(item, key) in tempProduct.imagesUrl"
                   :key="item.key"
                 >
-                  <img class="img-fluid mb-3" :src="tempProduct.imagesUrl[key]" />
+                  <img class="img-fluid mb-3" :src="item" />
                   <input
                     type="url"
                     class="form-control form-control"
                     placeholder="請輸入連結"
                     v-model="tempProduct.imagesUrl[key]"
                   />
-                  <div
-                    v-if="
-                      tempProduct.imagesUrl[tempProduct.imagesUrl.length - 1] ||
-                      !tempProduct.imagesUrl.length
-                    "
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    @click.prevent="tempProduct.imagesUrl.splice(key, 1)"
                   >
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger"
-                      @click.prevent="tempProduct.imagesUrl.splice(key, 1)"
-                    >
-                      移除
-                    </button>
-                  </div>
+                    移除
+                  </button>
                 </div>
-                <button
-                  class="btn btn-outline-primary btn-sm d-block w-100"
-                  @click="tempProduct.imagesUrl.push('')"
+                <div
+                  v-if="
+                    tempProduct.imagesUrl[tempProduct.imagesUrl.length - 1] ||
+                    !tempProduct.imagesUrl.length
+                  "
                 >
-                  新增圖片
-                </button>
+                  <button
+                    class="btn btn-outline-primary btn-sm d-block w-100"
+                    @click="tempProduct.imagesUrl.push('')"
+                  >
+                    新增圖片
+                  </button>
+                </div>
               </div>
             </div>
             <div class="col-sm-8">
@@ -220,9 +220,6 @@ export default {
       this.tempProduct = this.productProps;
       if (!this.tempProduct.imagesUrl) {
         this.tempProduct.imagesUrl = [];
-      }
-      if (!this.tempProduct.imageUrl) {
-        this.tempProduct.imageUrl = '';
       }
     },
   },
